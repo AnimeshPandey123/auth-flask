@@ -1,21 +1,20 @@
+from exceptions.validationexception import ValidationException
+from helpers.jwthelper import JwtHelper
 from flask import jsonify
-import jwt
+import sys
 
-class auth:
+class Auth:
     def __init__(self,email, password):
         self.email = email
         self.password = password
         self.key = "secret"
 
     def checkCreds(self):
-        if self.email == 'ani@mesh.com' and self.password == '123456':
-            return True
-        return False
+        if self.email != 'ani@mesh.com' or self.password != '123456':
+            list=['Credential does not match']
+            raise ValidationException(list)
     
     def login(self):
-        if self.checkCreds() == False:
-            return jsonify({'message': "Invalid Credentials"})
-        token = self.generateToken()
-
-    def generateToken(self):
-        return jwt.encode({"email": self.email}, self.key, algorithm="HS256")
+        self.checkCreds()
+        token = JwtHelper.generateToken(self.email)
+        return token
