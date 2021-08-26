@@ -12,7 +12,8 @@ def login():
         auth = Auth(body['email'],body['password'])
         token = auth.login()
         return jsonify({'data': {
-            'token' : token
+            'token' : token,
+            'status': '200'
         }})
     except ValidationException as e:
         return jsonify({'errors': e.errors}), 422

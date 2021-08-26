@@ -16,5 +16,5 @@ class Auth:
     
     def login(self):
         self.checkCreds()
-        token = JwtHelper.generateToken(self.email)
+        token = JwtHelper.generateToken(1)
         return token
